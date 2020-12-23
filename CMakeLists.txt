@@ -10,7 +10,7 @@ set(ImGui_INCLUDE_DIR /opt/imgui)
 
 find_package(Magnum REQUIRED GL Sdl2Application SceneGraph Shaders Primitives)
 find_package(MagnumPlugins REQUIRED)
-find_package(MagnumIntegration REQUIRED ImGui Bullet)
+#find_package(MagnumIntegration REQUIRED ImGui Bullet)
 
 #set(CMAKE_CXX_STANDARD 17)
 

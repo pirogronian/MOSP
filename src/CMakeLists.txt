@@ -2,6 +2,7 @@
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
 
 add_executable(MOSP 
+    CameraManipulator.h
     MospApplication.cpp
     SceneGraph.h
     SceneGraph.cpp
@@ -14,8 +15,8 @@ target_link_libraries(MOSP PRIVATE
     Magnum::SceneGraph
     Magnum::Shaders
     Magnum::Primitives
-    MagnumIntegration::ImGui
-    MagnumIntegration::Bullet
+    #MagnumIntegration::ImGui
+    #MagnumIntegration::Bullet
     )
 
 # Make the executable a default target to build & run in Visual Studio
