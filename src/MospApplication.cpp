@@ -5,6 +5,7 @@
 #include <Magnum/GL/Version.h>
 #include <Magnum/Math/Color.h>
 #include <Magnum/Primitives/Cone.h>
+#include <Magnum/Primitives/Cube.h>
 #include <Magnum/MeshTools/Compile.h>
 #include <Magnum/Trade/MeshData.h>
 #include <Magnum/GL/DefaultFramebuffer.h>
@@ -23,10 +24,10 @@ class MospApplication: public Platform::Application {
 
     private:
         void drawEvent() override;
-        void viewportEvent(ViewportEvent& ) override;
+        void viewportEvent(ViewportEvent&) override;
+        void mouseScrollEvent(MouseScrollEvent&) override;
 
         void setupSimulation();
-//         Corrade::Containers::GrowableArray<Magnum::GL::Mesh> _glmeshes;
         Simulation _sim;
 };
 
@@ -36,12 +37,14 @@ MospApplication::MospApplication(const Arguments& arguments): Platform::Applicat
     .setTitle("MOSP")
     .setWindowFlags(Configuration::WindowFlag::Resizable)}
 {
+    GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
+    GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
     GL::Renderer::setClearColor(0x404040_rgbf);
     setupSimulation();
 }
 
 void MospApplication::drawEvent() {
-    GL::defaultFramebuffer.clear(GL::FramebufferClear::Color);
+    GL::defaultFramebuffer.clear(GL::FramebufferClear::Color|GL::FramebufferClear::Depth);
 
     _sim.draw();
 
@@ -53,13 +56,27 @@ void MospApplication::viewportEvent(ViewportEvent& event) {
     _sim.camera().setViewport(event.windowSize());
 }
 
+void MospApplication::mouseScrollEvent(MouseScrollEvent& event) {
+    if(!event.offset().y()) return;
+
+    /* Distance to origin */
+    const Float distance = _sim.cameraManipulator().getAbsoluteDistance();
+
+    /* Move 15% of the distance back or forward */
+    _sim.cameraManipulator().changeDistanceByFactor(1.0f - (event.offset().y() > 0 ? 1/0.85f : 0.85f));
+
+    redraw();
+}
+
 void MospApplication::setupSimulation() {
-    _sim.cameraObject().translate(MOSP::SceneGraph::Vector3::zAxis(5.0));
+    _sim.cameraManipulator().setAbsoluteDistance(5);
+    _sim.cameraManipulator().setAbsoluteDistance(5);
     _sim.camera().setAspectRatioPolicy(Magnum::SceneGraph::AspectRatioPolicy::Extend)
         .setProjectionMatrix(MOSP::SceneGraph::Matrix4::perspectiveProjection(35.0_deg, 1.0, 0.01, 1000.0))
         .setViewport(GL::defaultFramebuffer.viewport().size());
-    auto *mesh = new GL::Mesh(MeshTools::compile(Primitives::coneSolid(2, 16, 1)));
-    _sim.createColoredObject(*mesh, 0xa5c9ea_rgbf, MOSP::SceneGraph::Matrix4::translation({0, 0, 0}));
+    auto *coneMesh = new GL::Mesh(MeshTools::compile(Primitives::coneSolid(2, 16, 1)));
+    auto *cubeMesh = new GL::Mesh(MeshTools::compile(Primitives::cubeSolid()));
+    _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::SceneGraph::Matrix4::translation({0, 0, 0}));
 }
 
 MAGNUM_APPLICATION_MAIN(MospApplication)
