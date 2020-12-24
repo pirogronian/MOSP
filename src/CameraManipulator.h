@@ -1,4 +1,6 @@
 
+#include <Magnum/Math/Quaternion.h>
+#include "Math.h"
 #include "SceneGraph.h"
 
 namespace MOSP
@@ -13,6 +15,8 @@ namespace MOSP
         {
         }
         SceneGraph::Camera3D& camera() { return m_camera; }
+        const SceneGraph::Object3D& rootObject() const { return m_manipulator; }
+        const SceneGraph::Object3D& cameraObject() const { return m_camObject; }
         void setAbsoluteDistance(double d)
         {
             m_camObject.resetTransformation();
@@ -30,6 +34,19 @@ namespace MOSP
         {
             float d = m_camObject.transformation().translation().z();
             m_camObject.translate(SceneGraph::Vector3::zAxis(d * factor));
+        }
+        void rotateRoot(const Magnum::Math::Quaternion<Magnum::Float>& quaternion)
+        {
+            m_manipulator.rotate(Magnum::Quaterniond(quaternion));
+        }
+        void rotateRoot(Math::Angle angle, const Magnum::Vector3& axis)
+        {
+            if (!axis.isNormalized())
+            {
+                Corrade::Utility::Debug{} << "CameraManipulator::rotateRoot(" << angle << "," << axis << "): axis not normalized!;";
+                return;
+            }
+            m_manipulator.rotate(SceneGraph::Rad(angle), SceneGraph::Vector3(axis).normalized());
         }
     };
 }

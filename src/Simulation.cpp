@@ -1,4 +1,5 @@
 
+#include <Corrade/Utility/Debug.h>
 #include <Corrade/Containers/Array.h>
 #include <Magnum/Math/Color.h>
 
@@ -38,13 +39,11 @@ MOSP::SceneGraph::Object3D *Simulation::createColoredObject(Magnum::GL::Mesh& me
     MOSP::SceneGraph::Object3D *obj = new MOSP::SceneGraph::Object3D(parent);
     obj->setTransformation(transform);
     new ColoredDrawable(*obj, _phongShader, mesh, color, _drawables);
-    
+
     return obj;
 }
 
 void Simulation::draw()
 {
-    GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
-    GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
-    _camera.draw(_drawables);
+    m_camMan.camera().draw(_drawables);
 }

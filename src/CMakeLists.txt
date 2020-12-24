@@ -1,13 +1,16 @@
 
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
 
-add_executable(MOSP 
+add_executable(MOSP
     CameraManipulator.h
+    Math.h
     MospApplication.cpp
     SceneGraph.h
     SceneGraph.cpp
     Simulation.h
-    Simulation.cpp)
+    Simulation.cpp
+    ViewportRotation.h
+    ViewportRotation.cpp)
 target_link_libraries(MOSP PRIVATE
     Magnum::Application
     Magnum::GL
