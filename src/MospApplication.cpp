@@ -30,6 +30,7 @@ class MospApplication: public Platform::Application {
         void viewportEvent(ViewportEvent&) override;
         void keyPressEvent(KeyEvent&) override;
         void keyReleaseEvent(KeyEvent&) override;
+        void textInputEvent(TextInputEvent&) override;
         void mouseScrollEvent(MouseScrollEvent&) override;
         void mousePressEvent(MouseEvent&) override;
         void mouseReleaseEvent(MouseEvent&) override;
@@ -65,6 +66,10 @@ MospApplication::MospApplication(const Arguments& arguments): Platform::Applicat
 void MospApplication::drawEvent() {
     GL::defaultFramebuffer.clear(GL::FramebufferClear::Color|GL::FramebufferClear::Depth);
 
+    GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
+    GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
+    GL::Renderer::disable(GL::Renderer::Feature::ScissorTest);
+    GL::Renderer::disable(GL::Renderer::Feature::Blending);
     _sim.draw();
 
     drawGUI();
@@ -83,12 +88,16 @@ void MospApplication::viewportEvent(ViewportEvent& event) {
 
 void MospApplication::keyPressEvent(KeyEvent& event) {
     if(m_imgui.handleKeyPressEvent(event)) return;
-    Corrade::Utility::Debug{} << "Unused keyPressEvent:" << event.keyName();
+//     Corrade::Utility::Debug{} << "Unused keyPressEvent:" << event.keyName();
 }
 
 void MospApplication::keyReleaseEvent(KeyEvent& event) {
     if(m_imgui.handleKeyReleaseEvent(event)) return;
-    Corrade::Utility::Debug{} << "Unused keyReleaseEvent:" << event.keyName();
+//     Corrade::Utility::Debug{} << "Unused keyReleaseEvent:" << event.keyName();
+}
+
+void MospApplication::textInputEvent(TextInputEvent& event) {
+    if(m_imgui.handleTextInputEvent(event)) return;
 }
 
 void MospApplication::mouseScrollEvent(MouseScrollEvent& event) {
@@ -136,10 +145,18 @@ void MospApplication::drawGUI()
     m_imgui.newFrame();
 
     /* Enable text input, if needed */
+//     if (ImGui::GetIO().WantTextInput)  Corrade::Utility::Debug{} << "ImGui want text input.";
+//     if (isTextInputActive())  Corrade::Utility::Debug{} << "Text input is active.";
     if(ImGui::GetIO().WantTextInput && !isTextInputActive())
+    {
         startTextInput();
+//         Corrade::Utility::Debug{} << "Text input started.";
+    }
     else if(!ImGui::GetIO().WantTextInput && isTextInputActive())
+    {
         stopTextInput();
+//         Corrade::Utility::Debug{} << "Text input stopped.";
+    }
 
     /* 1. Show a simple window.
        Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appear in
@@ -152,19 +169,15 @@ void MospApplication::drawGUI()
         ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
         ImGui::ShowDemoWindow();
     }
-    
+
     /* Update application cursor */
     m_imgui.updateApplicationCursor(*this);
-    
+
     GL::Renderer::disable(GL::Renderer::Feature::DepthTest);
     GL::Renderer::disable(GL::Renderer::Feature::FaceCulling);
     GL::Renderer::enable(GL::Renderer::Feature::ScissorTest);
     GL::Renderer::enable(GL::Renderer::Feature::Blending);
     m_imgui.drawFrame();
-    GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
-    GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
-    GL::Renderer::disable(GL::Renderer::Feature::ScissorTest);
-    GL::Renderer::disable(GL::Renderer::Feature::Blending);
 }
 
 void MospApplication::testMouseRotation(const Magnum::Vector2i &v)
