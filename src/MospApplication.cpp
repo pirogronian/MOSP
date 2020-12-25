@@ -28,6 +28,8 @@ class MospApplication: public Platform::Application {
     private:
         void drawEvent() override;
         void viewportEvent(ViewportEvent&) override;
+        void keyPressEvent(KeyEvent&) override;
+        void keyReleaseEvent(KeyEvent&) override;
         void mouseScrollEvent(MouseScrollEvent&) override;
         void mousePressEvent(MouseEvent&) override;
         void mouseReleaseEvent(MouseEvent&) override;
@@ -79,7 +81,20 @@ void MospApplication::viewportEvent(ViewportEvent& event) {
     m_vrot.setViewport(event.windowSize());
 }
 
+void MospApplication::keyPressEvent(KeyEvent& event) {
+    if(m_imgui.handleKeyPressEvent(event)) return;
+}
+
+void MospApplication::keyReleaseEvent(KeyEvent& event) {
+    if(m_imgui.handleKeyReleaseEvent(event)) return;
+}
+
 void MospApplication::mouseScrollEvent(MouseScrollEvent& event) {
+    if(m_imgui.handleMouseScrollEvent(event)) {
+        /* Prevent scrolling the page */
+        event.setAccepted();
+        return;
+    }
     if(!event.offset().y()) return;
 
     /* Move 15% of the distance back or forward */
@@ -90,18 +105,21 @@ void MospApplication::mouseScrollEvent(MouseScrollEvent& event) {
 
 void MospApplication::mousePressEvent(MouseEvent& event)
 {
+    if(m_imgui.handleMousePressEvent(event)) return;
     if(event.button() == MouseEvent::Button::Right)
         m_vrot.start(event.position());
 }
 
 void MospApplication::mouseReleaseEvent(MouseEvent& event)
 {
+    if(m_imgui.handleMouseReleaseEvent(event)) return;
     if(event.button() == MouseEvent::Button::Left)
         m_vrot.end();
 }
 
 void MospApplication::mouseMoveEvent(MouseMoveEvent& event)
 {
+    if(m_imgui.handleMouseMoveEvent(event)) return;
     if(!(event.buttons() & MouseMoveEvent::Button::Right)) return;
 
     m_vrot.update(event.position());
@@ -126,6 +144,11 @@ void MospApplication::drawGUI()
        a window called "Debug" automatically */
     {
         ImGui::Text("Hello, world!");
+        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
+            1000.0/Double(ImGui::GetIO().Framerate), Double(ImGui::GetIO().Framerate));
+
+        ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
+        ImGui::ShowDemoWindow();
     }
     
     /* Update application cursor */
