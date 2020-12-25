@@ -11,6 +11,7 @@
 #include <Magnum/GL/DefaultFramebuffer.h>
 #include <Magnum/GL/Mesh.h>
 #include <Magnum/Platform/Sdl2Application.h>
+#include <Magnum/ImGuiIntegration/Context.hpp>
 
 #include "SceneGraph.h"
 #include "Simulation.h"
@@ -32,9 +33,11 @@ class MospApplication: public Platform::Application {
         void mouseReleaseEvent(MouseEvent&) override;
         void mouseMoveEvent(MouseMoveEvent&) override;
 
+        void drawGUI();
         void testMouseRotation(const Magnum::Vector2i &);
 
         void setupSimulation();
+        Magnum::ImGuiIntegration::Context m_imgui{NoCreate};
         Simulation _sim;
         ViewportRotation m_vrot;
 };
@@ -45,9 +48,14 @@ MospApplication::MospApplication(const Arguments& arguments): Platform::Applicat
     .setTitle("MOSP")
     .setWindowFlags(Configuration::WindowFlag::Resizable)}
 {
-    GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
-    GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
+    GL::Renderer::setBlendEquation(GL::Renderer::BlendEquation::Add,
+        GL::Renderer::BlendEquation::Add);
+    GL::Renderer::setBlendFunction(GL::Renderer::BlendFunction::SourceAlpha,
+        GL::Renderer::BlendFunction::OneMinusSourceAlpha);
+
     GL::Renderer::setClearColor(0x404040_rgbf);
+    m_imgui = ImGuiIntegration::Context(Vector2{windowSize()}/dpiScaling(),
+        windowSize(), framebufferSize());
     setupSimulation();
     m_vrot.setViewport(windowSize());
 }
@@ -57,11 +65,16 @@ void MospApplication::drawEvent() {
 
     _sim.draw();
 
+    drawGUI();
+
     swapBuffers();
+    redraw();
 }
 
 void MospApplication::viewportEvent(ViewportEvent& event) {
     GL::defaultFramebuffer.setViewport({{}, event.framebufferSize()});
+    m_imgui.relayout(Vector2{event.windowSize()}/event.dpiScaling(),
+        event.windowSize(), event.framebufferSize());
     _sim.camera().setViewport(event.windowSize());
     m_vrot.setViewport(event.windowSize());
 }
@@ -93,9 +106,40 @@ void MospApplication::mouseMoveEvent(MouseMoveEvent& event)
 
     m_vrot.update(event.position());
     _sim.cameraManipulator().rotateRoot(m_vrot.lastAngle(), m_vrot.lastAxis());
-    Corrade::Utility::Debug{} << "Mouse pos:" << event.position();
+//     Corrade::Utility::Debug{} << "Mouse pos:" << event.position();
 
     redraw();
+}
+
+void MospApplication::drawGUI()
+{
+    m_imgui.newFrame();
+
+    /* Enable text input, if needed */
+    if(ImGui::GetIO().WantTextInput && !isTextInputActive())
+        startTextInput();
+    else if(!ImGui::GetIO().WantTextInput && isTextInputActive())
+        stopTextInput();
+
+    /* 1. Show a simple window.
+       Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appear in
+       a window called "Debug" automatically */
+    {
+        ImGui::Text("Hello, world!");
+    }
+    
+    /* Update application cursor */
+    m_imgui.updateApplicationCursor(*this);
+    
+    GL::Renderer::disable(GL::Renderer::Feature::DepthTest);
+    GL::Renderer::disable(GL::Renderer::Feature::FaceCulling);
+    GL::Renderer::enable(GL::Renderer::Feature::ScissorTest);
+    GL::Renderer::enable(GL::Renderer::Feature::Blending);
+    m_imgui.drawFrame();
+    GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
+    GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
+    GL::Renderer::disable(GL::Renderer::Feature::ScissorTest);
+    GL::Renderer::disable(GL::Renderer::Feature::Blending);
 }
 
 void MospApplication::testMouseRotation(const Magnum::Vector2i &v)
@@ -115,10 +159,6 @@ void MospApplication::setupSimulation() {
     auto *coneMesh = new GL::Mesh(MeshTools::compile(Primitives::coneSolid(2, 16, 1)));
     auto *cubeMesh = new GL::Mesh(MeshTools::compile(Primitives::cubeSolid()));
     _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::SceneGraph::Matrix4::translation({0, 0, 0}));
-//     testMouseRotation({1, 0});
-//     testMouseRotation({0, 1});
-//     testMouseRotation({0, 0});
-    testMouseRotation({1, 1});
 }
 
 MAGNUM_APPLICATION_MAIN(MospApplication)

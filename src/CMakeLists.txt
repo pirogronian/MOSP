@@ -11,16 +11,6 @@ add_executable(MOSP
     Simulation.cpp
     ViewportRotation.h
     ViewportRotation.cpp)
-target_link_libraries(MOSP PRIVATE
-    Magnum::Application
-    Magnum::GL
-    Magnum::Magnum
-    Magnum::SceneGraph
-    Magnum::Shaders
-    Magnum::Primitives
-    #MagnumIntegration::ImGui
-    #MagnumIntegration::Bullet
-    )
 
 # Make the executable a default target to build & run in Visual Studio
 set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT MospApplication)
