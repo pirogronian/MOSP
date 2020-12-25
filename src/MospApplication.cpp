@@ -83,10 +83,12 @@ void MospApplication::viewportEvent(ViewportEvent& event) {
 
 void MospApplication::keyPressEvent(KeyEvent& event) {
     if(m_imgui.handleKeyPressEvent(event)) return;
+    Corrade::Utility::Debug{} << "Unused keyPressEvent:" << event.keyName();
 }
 
 void MospApplication::keyReleaseEvent(KeyEvent& event) {
     if(m_imgui.handleKeyReleaseEvent(event)) return;
+    Corrade::Utility::Debug{} << "Unused keyReleaseEvent:" << event.keyName();
 }
 
 void MospApplication::mouseScrollEvent(MouseScrollEvent& event) {
