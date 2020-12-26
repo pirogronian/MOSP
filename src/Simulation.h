@@ -1,6 +1,9 @@
 
 #include <Magnum/Shaders/Phong.h>
 #include <Magnum/Math/Matrix4.h>
+#include <Magnum/BulletIntegration/Integration.h>
+#include <Magnum/BulletIntegration/MotionState.h>
+#include <Magnum/BulletIntegration/DebugDraw.h>
 #include "SceneGraph.h"
 #include "CameraManipulator.h"
 
@@ -23,6 +26,11 @@ namespace MOSP
             Magnum::Shaders::Phong& _shader;
             Magnum::GL::Mesh& _mesh;
             Magnum::Color4 _color;
+    };
+
+    class PhysicalObject : public SceneGraph::Object3D, public Magnum::BulletIntegration::MotionState
+    {
+        
     };
 
     class Simulation
