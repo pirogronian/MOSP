@@ -1,6 +1,3 @@
 [submodule "thirdparty/bullet3"]
 	path = thirdparty/bullet3
 	url = https://github.com/bulletphysics/bullet3
-[submodule "thirdparty/magnum-integration"]
-	path = thirdparty/magnum-integration
-	url = https://github.com/mosra/magnum-integration
