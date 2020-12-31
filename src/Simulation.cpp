@@ -26,6 +26,8 @@ void ColoredDrawable::draw(const MOSP::SceneGraph::Matrix4& transformationMatrix
         .draw(_mesh);
 }
 
+
+
 Simulation::Simulation()
 {
     _phongShader.setAmbientColor(0x111111_rgbf)
