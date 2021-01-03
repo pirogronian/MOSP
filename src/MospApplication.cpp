@@ -13,7 +13,7 @@
 #include <Magnum/Platform/Sdl2Application.h>
 #include <Magnum/ImGuiIntegration/Context.hpp>
 
-#include "SceneGraph.h"
+#include <SceneGraph/SceneGraph.h>
 #include "Simulation.h"
 #include "ViewportRotation.h"
 #include <Gui/Debug/SceneGraph.h>

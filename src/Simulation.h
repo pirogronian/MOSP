@@ -1,7 +1,8 @@
 
 #include <Magnum/Math/Matrix4.h>
 #include <Magnum/Shaders/Phong.h>
-#include "SceneGraph.h"
+
+#include <SceneGraph/SceneGraph.h>
 #include "CameraManipulator.h"
 
 namespace MOSP

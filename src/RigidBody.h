@@ -6,7 +6,8 @@
 #include <Magnum/BulletIntegration/Integration.h>
 #include <Magnum/BulletIntegration/MotionState.h>
 #include <Magnum/BulletIntegration/DebugDraw.h>
-#include "SceneGraph.h"
+
+#include <SceneGraph/SceneGraph.h>
 
 namespace MOSP
 {

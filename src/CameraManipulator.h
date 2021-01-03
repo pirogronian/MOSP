@@ -1,7 +1,8 @@
 
 #include <Magnum/Math/Quaternion.h>
 #include "Math.h"
-#include "SceneGraph.h"
+
+#include <SceneGraph/SceneGraph.h>
 
 namespace MOSP
 {

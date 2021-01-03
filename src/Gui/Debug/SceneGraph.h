@@ -1,6 +1,6 @@
 
 #include <imgui.h>
-#include <SceneGraph.h>
+#include <SceneGraph/SceneGraph.h>
 
 namespace MOSP
 {
