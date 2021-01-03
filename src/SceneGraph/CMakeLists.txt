@@ -1,5 +1,8 @@
 
 set(SOURCES
+    Object.h
+    Object.cpp
+    Scene.h
     SceneGraph.h
     SceneGraph.cpp)
 

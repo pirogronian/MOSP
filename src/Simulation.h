@@ -2,7 +2,8 @@
 #include <Magnum/Math/Matrix4.h>
 #include <Magnum/Shaders/Phong.h>
 
-#include <SceneGraph/SceneGraph.h>
+#include <SceneGraph/Scene.h>
+#include <SceneGraph/Object.h>
 #include "CameraManipulator.h"
 
 namespace MOSP
@@ -28,7 +29,7 @@ namespace MOSP
 
     class Simulation
     {
-        SceneGraph::Scene3D _root;
+        MOSP::SceneGraph::Scene _root;
 //         SceneGraph::Object3D _camObject{&_root};
 //         SceneGraph::Camera3D _camera{_camObject};
         CameraManipulator m_camMan{&_root};
@@ -40,7 +41,7 @@ namespace MOSP
 //         SceneGraph::Object3D& cameraObject() { return _camObject; }
         CameraManipulator& cameraManipulator() { return m_camMan; }
         SceneGraph::Camera3D& camera() { return m_camMan.camera(); }
-        SceneGraph::Object3D *createColoredObject(Magnum::GL::Mesh& mesh, const Magnum::Color4 color, SceneGraph::Matrix4 transform, SceneGraph::Object3D *parent = nullptr);
+        SceneGraph::Object *createColoredObject(Magnum::GL::Mesh& mesh, const Magnum::Color4 color, SceneGraph::Matrix4 transform, SceneGraph::Object *parent = nullptr);
         void draw();
     };
 }

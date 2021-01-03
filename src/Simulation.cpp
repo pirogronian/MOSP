@@ -35,10 +35,14 @@ Simulation::Simulation()
         .setShininess(80.0f);
 }
 
-MOSP::SceneGraph::Object3D *Simulation::createColoredObject(Magnum::GL::Mesh& mesh, const Magnum::Color4 color, MOSP::SceneGraph::Matrix4 transform, MOSP::SceneGraph::Object3D *parent)
+MOSP::SceneGraph::Object *Simulation::createColoredObject(Magnum::GL::Mesh& mesh, const Magnum::Color4 color, MOSP::SceneGraph::Matrix4 transform, MOSP::SceneGraph::Object *parent)
 {
-    if (parent == nullptr)  parent = &_root;
-    MOSP::SceneGraph::Object3D *obj = new MOSP::SceneGraph::Object3D(parent);
+    auto *obj = new MOSP::SceneGraph::Object();
+    if (parent == nullptr)
+        obj->setParent(&_root);
+    else
+        obj->setParent(parent);
+
     obj->setTransformation(transform);
     new ColoredDrawable(*obj, _phongShader, mesh, color, _drawables);
 
