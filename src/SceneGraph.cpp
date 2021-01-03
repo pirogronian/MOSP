@@ -6,6 +6,8 @@
 #include <Magnum/SceneGraph/FeatureGroup.hpp>
 #include <Magnum/SceneGraph/Camera.hpp>
 
+#include <Utils/AutoIndexer.h>
+
 using namespace Magnum;
 
 template class Magnum::SceneGraph::BasicMatrixTransformation3D<Magnum::Double>;
@@ -25,3 +27,5 @@ template class Magnum::SceneGraph::AbstractFeatureGroup<3, Magnum::Double>;
 template class Magnum::SceneGraph::FeatureGroup<3, Magnum::SceneGraph::Drawable<3, Magnum::Double>, Magnum::Double>;
 
 // template class Magnum::Math::Matrix4<Double>;
+
+template class MOSP::Utils::AutoIndexer<Magnum::SceneGraph::Object<Magnum::SceneGraph::BasicMatrixTransformation3D<Magnum::Double>>>;
