@@ -45,7 +45,7 @@ class MospApplication: public Platform::Application {
         Simulation _sim;
         ViewportRotation m_vrot;
         
-        MOSP::SceneGraph::Object3D *m_debuggedObj{nullptr};
+        MOSP::SceneGraph::Object *m_debuggedObj{nullptr};
 };
 
 using namespace Magnum::Math::Literals;

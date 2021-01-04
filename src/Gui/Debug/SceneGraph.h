@@ -1,6 +1,6 @@
 
 #include <imgui.h>
-#include <SceneGraph/SceneGraph.h>
+#include <SceneGraph/Object.h>
 
 namespace MOSP
 {
@@ -10,8 +10,8 @@ namespace MOSP
         {
             namespace SceneGraph
             {
-                void HierarchyWidget(MOSP::SceneGraph::Object3D &);
-                void ObjectInfoWidget(MOSP::SceneGraph::Object3D &);
+                void HierarchyWidget(MOSP::SceneGraph::Object &);
+                void ObjectInfoWidget(MOSP::SceneGraph::Object &);
             }
         }
     }

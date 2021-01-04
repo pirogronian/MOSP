@@ -1,27 +1,30 @@
 
 #pragma once
 
+#include <Utils/AutoIndexer.h>
 #include "SceneGraph.h"
 
 namespace MOSP
 {
     namespace SceneGraph
     {
-        class Scene;
 
         class Object : public Object3D
         {
-            std::size_t m_sceneIndex;
-            Object3D& setParent(Object3D *);
+            static MOSP::Utils::AutoIndexer<Object> m_indexer;
+            std::size_t m_id;
         public:
-            Object(Object *parent = nullptr);
-            Object(Scene *parent);
+            Object(Object *parent = nullptr) : Object3D(parent)
+            {
+                m_id = m_indexer.add(this);
+            }
+            Object(Scene3D *parent) : Object3D(parent)
+            {
+                m_id = m_indexer.add(this);
+            }
+            ~Object();
 
-            std::size_t sceneIndex() const { return m_sceneIndex; }
-            Object& setParent(Object *);
-            Object& setParent(Scene *);
-            Scene *scene();
-            const Scene *scene() const;
+            std::size_t id() const { return m_id; }
         };
     }
 }

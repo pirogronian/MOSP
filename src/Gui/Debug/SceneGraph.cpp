@@ -1,13 +1,15 @@
 
 #include "SceneGraph.h"
+#include <SceneGraph/Object.h>
 
 namespace ns = MOSP::Gui::Debug::SceneGraph;
 
-void ns::HierarchyWidget(MOSP::SceneGraph::Object3D &)
+void ns::HierarchyWidget(MOSP::SceneGraph::Object &)
 {
+    
 }
 
-void ns::ObjectInfoWidget(MOSP::SceneGraph::Object3D &obj)
+void ns::ObjectInfoWidget(MOSP::SceneGraph::Object &obj)
 {
     auto pos = obj.transformationMatrix().translation();
     ImGui::Text("Position:");
