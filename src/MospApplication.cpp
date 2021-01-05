@@ -63,6 +63,7 @@ MospApplication::MospApplication(const Arguments& arguments): Platform::Applicat
     GL::Renderer::setClearColor(0x404040_rgbf);
     m_imgui = ImGuiIntegration::Context(Vector2{windowSize()}/dpiScaling(),
         windowSize(), framebufferSize());
+    ImGui::GetIO().FontGlobalScale = 1.5;
     setupSimulation();
     m_vrot.setViewport(windowSize());
 }
@@ -96,12 +97,6 @@ void MospApplication::keyPressEvent(KeyEvent& event) {
     if (event.isRepeated()) return;
     if (event.key() == KeyEvent::Key::I)
         m_gui.m_showGui = !m_gui.m_showGui;
-
-//     if (m_gui.m_showGui && event.key() == KeyEvent::Key::D)
-//         m_gui.m_showDebug = !m_gui.m_showDebug;
-// 
-//     if (m_gui.m_showGui && event.key() == KeyEvent::Key::E)
-//         m_gui.m_showDemo = !m_gui.m_showDemo;
 }
 
 void MospApplication::keyReleaseEvent(KeyEvent& event) {

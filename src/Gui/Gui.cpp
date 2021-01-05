@@ -7,11 +7,13 @@ using namespace MOSP::Gui;
 
 void Gui::doStats()
 {
-    ImGui::Begin("Debug info", &m_showStats);
-    ImGui::Text("Hello, world!");
-    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
-        1000.0/Magnum::Double(ImGui::GetIO().Framerate), Magnum::Double(ImGui::GetIO().Framerate));
-
+    if (ImGui::Begin("Debug info", &m_showStats))
+    {
+        ImGui::Text("Hello, world!");
+        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
+            1000.0/Magnum::Double(ImGui::GetIO().Framerate), Magnum::Double(ImGui::GetIO().Framerate));
+        ImGui::End();
+    }
 //     ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
 }
 
@@ -56,10 +58,10 @@ void Gui::doAll()
         if (ImGui::BeginMenu("View"))
         {
             ImGui::MenuItem("Show GUI", "I", &m_showGui);
-            ImGui::MenuItem("Demo window", "", &m_showDemo);
-            ImGui::MenuItem("Stats window", "", &m_showStats);
-            ImGui::MenuItem("Currents hierarchy window", "", &m_showHierarchy);
-            ImGui::MenuItem("Current object window", "", &m_showCurrent);
+            ImGui::MenuItem("Demo", "", &m_showDemo);
+            ImGui::MenuItem("Stats", "", &m_showStats);
+            ImGui::MenuItem("Objects hierarchy", "", &m_showHierarchy);
+            ImGui::MenuItem("Object info", "", &m_showCurrent);
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();

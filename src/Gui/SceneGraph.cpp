@@ -34,9 +34,14 @@ MOSP::Object3D *ns::HierarchyWidget(MOSP::Object3D *obj)
 void ns::ObjectInfoWidget(MOSP::Object3D *obj)
 {
     auto pos = obj->transformationMatrix().translation();
+    ImGui::BeginGroup();
     ImGui::Text("Position:");
     ns::TransformInfoWidget(pos);
+    ImGui::EndGroup();
+    ImGui::SameLine();
+    ImGui::BeginGroup();
     ImGui::Text("Rotation:");
     auto rot = MOSP::toEuler(obj->transformationMatrix().rotation());
     ns::TransformInfoWidget(rot);
+    ImGui::EndGroup();
 }
