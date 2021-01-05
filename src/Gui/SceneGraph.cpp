@@ -3,6 +3,7 @@
 #include <Gui/SceneGraph.h>
 #include <Object.h>
 #include <Math.h>
+#include "TransformInfo.h"
 
 namespace ns = MOSP::Gui;
 
@@ -34,12 +35,8 @@ void ns::ObjectInfoWidget(MOSP::Object3D *obj)
 {
     auto pos = obj->transformationMatrix().translation();
     ImGui::Text("Position:");
-    ImGui::Text("X: %f", pos.x());
-    ImGui::Text("Y: %f", pos.y());
-    ImGui::Text("Z: %f", pos.z());
+    ns::TransformInfoWidget(pos);
     ImGui::Text("Rotation:");
     auto rot = MOSP::toEuler(obj->transformationMatrix().rotation());
-    ImGui::Text("X: %f", rot[0]);
-    ImGui::Text("Y: %f", rot[1]);
-    ImGui::Text("Z: %f", rot[2]);
+    ns::TransformInfoWidget(rot);
 }
