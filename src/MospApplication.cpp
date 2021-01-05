@@ -97,11 +97,11 @@ void MospApplication::keyPressEvent(KeyEvent& event) {
     if (event.key() == KeyEvent::Key::I)
         m_gui.m_showGui = !m_gui.m_showGui;
 
-    if (m_gui.m_showGui && event.key() == KeyEvent::Key::D)
-        m_gui.m_showDebug = !m_gui.m_showDebug;
-
-    if (m_gui.m_showGui && event.key() == KeyEvent::Key::E)
-        m_gui.m_showDemo = !m_gui.m_showDemo;
+//     if (m_gui.m_showGui && event.key() == KeyEvent::Key::D)
+//         m_gui.m_showDebug = !m_gui.m_showDebug;
+// 
+//     if (m_gui.m_showGui && event.key() == KeyEvent::Key::E)
+//         m_gui.m_showDemo = !m_gui.m_showDemo;
 }
 
 void MospApplication::keyReleaseEvent(KeyEvent& event) {
@@ -195,8 +195,8 @@ void MospApplication::setupSimulation() {
         .setViewport(GL::defaultFramebuffer.viewport().size());
     auto *coneMesh = new GL::Mesh(MeshTools::compile(Primitives::coneSolid(2, 16, 1)));
     auto *cubeMesh = new GL::Mesh(MeshTools::compile(Primitives::cubeSolid()));
-    m_gui.m_debuggedObj = _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::Matrix4::translation({0, 0, 0}));
-    m_gui.m_debuggedObj = &_sim.cameraManipulator().rootObject();
+    _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::Matrix4::translation({0, 0, 0}));
+    _sim.cameraManipulator().rootObject();
     m_gui.m_hierarchyObj = &_sim.rootObject();
 }
 

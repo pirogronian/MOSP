@@ -11,13 +11,17 @@ namespace MOSP
         class Gui
         {
         public:
-            Object3D *m_debuggedObj{nullptr};
+            Object3D *m_currentObj{nullptr};
             Object3D *m_hierarchyObj{nullptr};
-            bool m_showGui{false};
-            bool m_showDebug{false};
+            bool m_showGui{true};
             bool m_showDemo{false};
-            void doDebug();
+            bool m_showStats{false};
+            bool m_showHierarchy{false};
+            bool m_showCurrent{false};
             void doDemo();
+            void doStats();
+            void doHierarchy();
+            void doCurrentObjectInfo();
             void doAll();
         };
     }
