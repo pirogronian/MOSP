@@ -7,9 +7,6 @@
 #include <Magnum/SceneGraph/Camera.h>
 
 namespace MOSP {
-    typedef Magnum::Math::Rad<Magnum::Double> Rad;
-    typedef Magnum::Math::Vector3<Magnum::Double> Vector3;
-    typedef Magnum::Math::Matrix4<Magnum::Double> Matrix4;
     typedef Magnum::SceneGraph::BasicMatrixTransformation3D<Magnum::Double> MatrixTransformation3D;
 
     typedef Magnum::SceneGraph::Object<MatrixTransformation3D> Object3D;

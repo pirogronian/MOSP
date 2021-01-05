@@ -10,7 +10,7 @@ namespace MOSP
         Magnum::Vector3 m_prevPos;
         Magnum::Vector3 m_lastAxis;
         Magnum::Vector2i m_viewport;
-        Math::Angle m_lastAngle;
+        Angle m_lastAngle;
         bool m_active {false};
     public:
         void setViewport(const Magnum::Vector2i size) { m_viewport = size; }
@@ -18,7 +18,7 @@ namespace MOSP
         void end() { m_prevPos = Magnum::Vector3(); m_active = false; }
         void update(const Magnum::Vector2i&);
         Magnum::Vector3 positionOnSphere(const Magnum::Vector2i& position) const;
-        Math::Angle lastAngle() const { return m_lastAngle; }
+        Angle lastAngle() const { return m_lastAngle; }
         Magnum::Vector3 lastAxis() const { return m_lastAxis.normalized(); }
     };
 }

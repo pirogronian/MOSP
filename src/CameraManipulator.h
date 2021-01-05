@@ -40,7 +40,7 @@ namespace MOSP
         {
             m_manipulator.rotate(Magnum::Quaterniond(quaternion));
         }
-        void rotateRoot(Math::Angle angle, const Magnum::Vector3& axis)
+        void rotateRoot(Angle angle, const Magnum::Vector3& axis)
         {
             if (!axis.isNormalized())
             {
