@@ -17,6 +17,7 @@
 #include "Simulation.h"
 #include "ViewportRotation.h"
 #include <Gui/SceneGraph.h>
+#include <Gui/Gui.h>
 
 using namespace Magnum;
 // using namespace Magnum::Platform::Application;
@@ -45,7 +46,7 @@ class MospApplication: public Platform::Application {
         Simulation _sim;
         ViewportRotation m_vrot;
 
-        MOSP::Object *m_debuggedObj{nullptr};
+        Gui::Gui m_gui;
 };
 
 using namespace Magnum::Math::Literals;
@@ -92,6 +93,15 @@ void MospApplication::viewportEvent(ViewportEvent& event) {
 void MospApplication::keyPressEvent(KeyEvent& event) {
     if(m_imgui.handleKeyPressEvent(event)) return;
 //     Corrade::Utility::Debug{} << "Unused keyPressEvent:" << event.keyName();
+    if (event.isRepeated()) return;
+    if (event.key() == KeyEvent::Key::I)
+        m_gui.m_showGui = !m_gui.m_showGui;
+
+    if (m_gui.m_showGui && event.key() == KeyEvent::Key::D)
+        m_gui.m_showDebug = !m_gui.m_showDebug;
+
+    if (m_gui.m_showGui && event.key() == KeyEvent::Key::E)
+        m_gui.m_showDemo = !m_gui.m_showDemo;
 }
 
 void MospApplication::keyReleaseEvent(KeyEvent& event) {
@@ -139,7 +149,6 @@ void MospApplication::mouseMoveEvent(MouseMoveEvent& event)
     m_vrot.update(event.position());
     _sim.cameraManipulator().rotateRoot(m_vrot.lastAngle(), m_vrot.lastAxis());
 //     Corrade::Utility::Debug{} << "Mouse pos:" << event.position();
-
     redraw();
 }
 
@@ -152,17 +161,7 @@ void MospApplication::drawGUI()
     else if(!ImGui::GetIO().WantTextInput && isTextInputActive())
         stopTextInput();
 
-    {
-        ImGui::Text("Hello, world!");
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
-            1000.0/Double(ImGui::GetIO().Framerate), Double(ImGui::GetIO().Framerate));
-
-        if (m_debuggedObj)
-            Gui::ObjectInfoWidget(m_debuggedObj);
-        ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
-        ImGui::ShowDemoWindow();
-    }
-
+    m_gui.doAll();
     /* Update application cursor */
     m_imgui.updateApplicationCursor(*this);
 
@@ -189,7 +188,7 @@ void MospApplication::setupSimulation() {
         .setViewport(GL::defaultFramebuffer.viewport().size());
     auto *coneMesh = new GL::Mesh(MeshTools::compile(Primitives::coneSolid(2, 16, 1)));
     auto *cubeMesh = new GL::Mesh(MeshTools::compile(Primitives::cubeSolid()));
-    m_debuggedObj = _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::Matrix4::translation({0, 0, 0}));
+    m_gui.m_debuggedObj = _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::Matrix4::translation({0, 0, 0}));
 }
 
 MAGNUM_APPLICATION_MAIN(MospApplication)

@@ -1,5 +1,7 @@
 
 set(SOURCES
+    Gui.h
+    Gui.cpp
     SceneGraph.h
     SceneGraph.cpp)
 
