@@ -6,7 +6,7 @@ namespace MOSP
 {
     namespace Gui
     {
-        void HierarchyWidget(MOSP::Object3D *);
+        MOSP::Object3D *HierarchyWidget(MOSP::Object3D *);
         void ObjectInfoWidget(MOSP::Object3D *);
     }
 }

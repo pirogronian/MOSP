@@ -13,6 +13,12 @@ void Gui::doDebug()
     if (m_debuggedObj)
         ObjectInfoWidget(m_debuggedObj);
     ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
+    if (m_hierarchyObj)
+    {
+        auto *clicked = HierarchyWidget(m_hierarchyObj);
+        if (clicked != nullptr)
+            m_debuggedObj = clicked;
+    }
 }
 
 void Gui::doDemo()

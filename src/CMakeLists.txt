@@ -16,6 +16,7 @@ target_sources(MOSP PRIVATE
     Bullet.h
     CameraManipulator.h
     Math.h
+    Math.cpp
     MospApplication.cpp
     Object.cpp
     Object.h

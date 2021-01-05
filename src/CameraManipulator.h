@@ -17,7 +17,9 @@ namespace MOSP
         }
         Camera3D& camera() { return m_camera; }
         const Object3D& rootObject() const { return m_manipulator; }
+        Object3D& rootObject() { return m_manipulator; }
         const Object3D& cameraObject() const { return m_camObject; }
+        Object3D& cameraObject() { return m_camObject; }
         void setAbsoluteDistance(double d)
         {
             m_camObject.resetTransformation();

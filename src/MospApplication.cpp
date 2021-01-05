@@ -139,6 +139,13 @@ void MospApplication::mouseReleaseEvent(MouseEvent& event)
     if(m_imgui.handleMouseReleaseEvent(event)) return;
     if(event.button() == MouseEvent::Button::Left)
         m_vrot.end();
+//     if (m_gui.m_debuggedObj)
+//     {
+//         Corrade::Utility::Debug{} << "D object transform:\n" << m_gui.m_debuggedObj->transformationMatrix();
+//         Corrade::Utility::Debug{} << " translation:\n" << m_gui.m_debuggedObj->transformationMatrix().translation();
+//         Corrade::Utility::Debug{} << " rotation M:\n" << m_gui.m_debuggedObj->transformationMatrix().rotation();
+//         Corrade::Utility::Debug{} << " rotation E:\n" << toEuler(m_gui.m_debuggedObj->transformationMatrix().rotation());
+//     }
 }
 
 void MospApplication::mouseMoveEvent(MouseMoveEvent& event)
@@ -189,6 +196,8 @@ void MospApplication::setupSimulation() {
     auto *coneMesh = new GL::Mesh(MeshTools::compile(Primitives::coneSolid(2, 16, 1)));
     auto *cubeMesh = new GL::Mesh(MeshTools::compile(Primitives::cubeSolid()));
     m_gui.m_debuggedObj = _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::Matrix4::translation({0, 0, 0}));
+    m_gui.m_debuggedObj = &_sim.cameraManipulator().rootObject();
+    m_gui.m_hierarchyObj = &_sim.rootObject();
 }
 
 MAGNUM_APPLICATION_MAIN(MospApplication)
