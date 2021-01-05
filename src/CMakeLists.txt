@@ -9,7 +9,6 @@ add_definitions(-DBT_USE_DOUBLE_PRECISION)
 
 add_subdirectory(thirdparty)
 add_subdirectory(Utils)
-add_subdirectory(SceneGraph)
 add_subdirectory(Gui)
 add_subdirectory(Tests)
 
@@ -18,8 +17,12 @@ target_sources(MOSP PRIVATE
     CameraManipulator.h
     Math.h
     MospApplication.cpp
+    Object.cpp
+    Object.h
     RigidBody.h
     RigidBody.cpp
+    SceneGraph.h
+    SceneGraph.cpp
     Simulation.h
     Simulation.cpp
     ViewportRotation.h

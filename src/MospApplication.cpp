@@ -13,10 +13,10 @@
 #include <Magnum/Platform/Sdl2Application.h>
 #include <Magnum/ImGuiIntegration/Context.hpp>
 
-#include <SceneGraph/SceneGraph.h>
+#include <SceneGraph.h>
 #include "Simulation.h"
 #include "ViewportRotation.h"
-#include <Gui/Debug/SceneGraph.h>
+#include <Gui/SceneGraph.h>
 
 using namespace Magnum;
 // using namespace Magnum::Platform::Application;
@@ -44,8 +44,8 @@ class MospApplication: public Platform::Application {
         Magnum::ImGuiIntegration::Context m_imgui{NoCreate};
         Simulation _sim;
         ViewportRotation m_vrot;
-        
-        MOSP::SceneGraph::Object *m_debuggedObj{nullptr};
+
+        MOSP::Object *m_debuggedObj{nullptr};
 };
 
 using namespace Magnum::Math::Literals;
@@ -158,7 +158,7 @@ void MospApplication::drawGUI()
             1000.0/Double(ImGui::GetIO().Framerate), Double(ImGui::GetIO().Framerate));
 
         if (m_debuggedObj)
-            Gui::Debug::SceneGraph::ObjectInfoWidget(*m_debuggedObj);
+            Gui::ObjectInfoWidget(m_debuggedObj);
         ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
         ImGui::ShowDemoWindow();
     }
@@ -185,11 +185,11 @@ void MospApplication::setupSimulation() {
     _sim.cameraManipulator().setAbsoluteDistance(5);
     _sim.cameraManipulator().setAbsoluteDistance(5);
     _sim.camera().setAspectRatioPolicy(Magnum::SceneGraph::AspectRatioPolicy::Extend)
-        .setProjectionMatrix(MOSP::SceneGraph::Matrix4::perspectiveProjection(35.0_deg, 1.0, 0.01, 1000.0))
+        .setProjectionMatrix(MOSP::Matrix4::perspectiveProjection(35.0_deg, 1.0, 0.01, 1000.0))
         .setViewport(GL::defaultFramebuffer.viewport().size());
     auto *coneMesh = new GL::Mesh(MeshTools::compile(Primitives::coneSolid(2, 16, 1)));
     auto *cubeMesh = new GL::Mesh(MeshTools::compile(Primitives::cubeSolid()));
-    m_debuggedObj = _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::SceneGraph::Matrix4::translation({0, 0, 0}));
+    m_debuggedObj = _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::Matrix4::translation({0, 0, 0}));
 }
 
 MAGNUM_APPLICATION_MAIN(MospApplication)

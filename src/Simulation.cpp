@@ -6,15 +6,14 @@
 #include <Magnum/GL/Renderer.h>
 #include <Magnum/Math/Color.h>
 // #include <Magnum/SceneGraph/Camera.h>
-#include "Simulation.h"
+#include <Simulation.h>
 
 using namespace Magnum;
 using namespace Magnum::Math;
 using namespace Magnum::Math::Literals;
 using namespace MOSP;
-using namespace MOSP::SceneGraph;
 
-void ColoredDrawable::draw(const MOSP::SceneGraph::Matrix4& transformationMatrix, MOSP::SceneGraph::Camera3D& camera) {
+void ColoredDrawable::draw(const MOSP::Matrix4& transformationMatrix, MOSP::Camera3D& camera) {
     _shader
         .setDiffuseColor(_color)
         .setLightPositions({
@@ -35,9 +34,9 @@ Simulation::Simulation()
         .setShininess(80.0f);
 }
 
-MOSP::SceneGraph::Object *Simulation::createColoredObject(Magnum::GL::Mesh& mesh, const Magnum::Color4 color, MOSP::SceneGraph::Matrix4 transform, MOSP::SceneGraph::Object *parent)
+MOSP::Object *Simulation::createColoredObject(Magnum::GL::Mesh& mesh, const Magnum::Color4 color, MOSP::Matrix4 transform, MOSP::Object *parent)
 {
-    auto *obj = new MOSP::SceneGraph::Object();
+    auto *obj = new MOSP::Object();
     if (parent == nullptr)
         obj->setParent(&_root);
     else

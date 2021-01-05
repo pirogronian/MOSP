@@ -7,14 +7,14 @@
 #include <Magnum/BulletIntegration/MotionState.h>
 #include <Magnum/BulletIntegration/DebugDraw.h>
 
-#include <SceneGraph/SceneGraph.h>
+#include <Object.h>
 
 namespace MOSP
 {
 
-class RigidBody: public SceneGraph::Object3D {
+class RigidBody: public Object {
     public:
-        RigidBody(SceneGraph::Object3D*, Magnum::Float, btCollisionShape*, btDynamicsWorld& );
+        RigidBody(Object*, Magnum::Float, btCollisionShape*, btDynamicsWorld& );
 
         ~RigidBody() {
             m_bWorld.removeRigidBody(m_bRigidBody.get());

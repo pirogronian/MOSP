@@ -4,7 +4,7 @@
 using namespace Corrade;
 using namespace MOSP;
 
-RigidBody::RigidBody(SceneGraph::Object3D* parent, Magnum::Float mass, btCollisionShape* bShape, btDynamicsWorld& bWorld): SceneGraph::Object3D{parent}, m_bWorld(bWorld) {
+RigidBody::RigidBody(Object* parent, Magnum::Float mass, btCollisionShape* bShape, btDynamicsWorld& bWorld): Object{parent}, m_bWorld(bWorld) {
     /* Calculate inertia so the object reacts as it should with
         rotation and everything */
     btVector3 bInertia(0.0f, 0.0f, 0.0f);

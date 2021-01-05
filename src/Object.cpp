@@ -1,7 +1,7 @@
 
 #include "Object.h"
 
-using namespace MOSP::SceneGraph;
+using namespace MOSP;
 
 Object::~Object()
 {
