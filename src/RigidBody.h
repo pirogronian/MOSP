@@ -29,6 +29,6 @@ class RigidBody: public Object {
 
     private:
         btDynamicsWorld& m_bWorld;
-        Corrade::Containers::Pointer<btRigidBody> m_bRigidBody;
+        Corrade::Containers::Pointer<btRigidBody> m_rigidBody;
 };
 }

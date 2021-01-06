@@ -20,8 +20,8 @@ target_sources(MOSP PRIVATE
     MospApplication.cpp
     Object.cpp
     Object.h
-    RigidBody.h
-    RigidBody.cpp
+    #RigidBody.h
+    #RigidBody.cpp
     SceneGraph.h
     SceneGraph.cpp
     Simulation.h
