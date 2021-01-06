@@ -1,6 +1,7 @@
 
 set(SOURCES
-    AutoIndexer.h)
+    AutoIndexer.h
+    NonOwningLinkedList.h)
 
 list(TRANSFORM SOURCES PREPEND "${CMAKE_CURRENT_SOURCE_DIR}/")
 
