@@ -16,4 +16,5 @@ target_include_directories(AccumulatorTest BEFORE PRIVATE "${CMAKE_CURRENT_SOURC
 target_link_libraries(AccumulatorTest
     Corrade::Utility
     Corrade::Interconnect
+    Magnum::Magnum
     Utils)

@@ -5,6 +5,7 @@
 #include <Corrade/Utility/FormatStl.h>
 #include <Corrade/Utility/DebugStl.h>
 #include <Corrade/Utility/Debug.h>
+#include <Magnum/Timeline.h>
 
 namespace MOSP
 {
@@ -52,6 +53,28 @@ namespace MOSP
 
         typedef Accumulator<double> StandardAccumulator;
         typedef TriggeringAccumulator<double> StandardTriggeringAccumulator;
+
+        class TimeAccumulator : public StandardAccumulator, public Magnum::Timeline
+        {
+        public:
+            TimeAccumulator(double rd) : StandardAccumulator(rd) {}
+            double update()
+            {
+                nextFrame();
+                return appendDelta(previousFrameDuration());
+            }
+        };
+
+        class TriggeringTimeAccumulator : public StandardTriggeringAccumulator, public Magnum::Timeline
+        {
+        public:
+            TriggeringTimeAccumulator(double rd) : StandardTriggeringAccumulator(rd) {}
+            double update()
+            {
+                nextFrame();
+                return appendDelta(previousFrameDuration());
+            }
+        };
 
         template<typename T>
         Corrade::Utility::Debug& operator<<(Corrade::Utility::Debug& out, const Accumulator<T>& acc)

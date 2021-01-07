@@ -49,5 +49,13 @@ int main()
     for(int i = 0; i < 10; i++)
         tacc.appendDelta(1);
 
+    TimeAccumulator timeacc(5);
+    timeacc.start();
+    while(timeacc.left() > 0)
+    {
+        Debug{} << timeacc;
+        Debug{} << timeacc.update();
+    }
+
     return 0;
 }
