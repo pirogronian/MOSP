@@ -1,5 +1,7 @@
 
 set(SOURCES
+    Accumulator.h
+    Accumulator.cpp
     AutoIndexer.h
     NonOwningLinkedList.h)
 
