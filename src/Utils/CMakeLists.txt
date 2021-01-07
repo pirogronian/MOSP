@@ -5,6 +5,8 @@ set(SOURCES
     AutoIndexer.h
     NonOwningLinkedList.h)
 
-list(TRANSFORM SOURCES PREPEND "${CMAKE_CURRENT_SOURCE_DIR}/")
+add_library(Utils STATIC ${SOURCES})
 
-target_sources(MOSP PRIVATE ${SOURCES})
+#list(TRANSFORM SOURCES PREPEND "${CMAKE_CURRENT_SOURCE_DIR}/")
+
+#target_sources(MOSP PRIVATE ${SOURCES})

@@ -10,3 +10,10 @@ add_executable(NonOwningLinkedListTest NonOwningLinkedListTest.cpp)
 target_include_directories(NonOwningLinkedListTest BEFORE PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../")
 
 target_link_libraries(NonOwningLinkedListTest Corrade::Utility)
+
+add_executable(AccumulatorTest AccumulatorTest.cpp)
+target_include_directories(AccumulatorTest BEFORE PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../")
+target_link_libraries(AccumulatorTest
+    Corrade::Utility
+    Corrade::Interconnect
+    Utils)

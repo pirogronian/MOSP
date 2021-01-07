@@ -31,6 +31,7 @@ target_sources(MOSP PRIVATE
 )
 
 target_link_libraries(MOSP PRIVATE
+    Utils
     Magnum::Application
     Magnum::GL
     Magnum::Magnum
