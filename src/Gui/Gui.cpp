@@ -5,6 +5,22 @@
 
 using namespace MOSP::Gui;
 
+Corrade::Containers::LinkedList<MOSP::Gui::StateWidget> Gui::m_widgetList;
+
+MOSP::Object3D *Gui::m_currentObj{nullptr};
+MOSP::Object3D *Gui::m_hierarchyObj{nullptr};
+bool Gui::m_showGui{true};
+bool Gui::m_showDemo{false};
+bool Gui::m_showStats{false};
+bool Gui::m_showHierarchy{false};
+bool Gui::m_showCurrent{false};
+
+void Gui::doStateWidgets()
+{
+    for (auto &w : m_widgetList)
+        w.doGui();
+}
+
 void Gui::doStats()
 {
     if (ImGui::Begin("Debug info", &m_showStats))

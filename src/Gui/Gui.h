@@ -1,8 +1,10 @@
 
 #pragma once
 
+#include <Corrade/Containers/LinkedList.h>
 #include <imgui.h>
 #include <Object.h>
+#include "StateWidget.h"
 
 namespace MOSP
 {
@@ -10,19 +12,23 @@ namespace MOSP
     {
         class Gui
         {
+            static Corrade::Containers::LinkedList<MOSP::Gui::StateWidget> m_widgetList;
         public:
-            Object3D *m_currentObj{nullptr};
-            Object3D *m_hierarchyObj{nullptr};
-            bool m_showGui{true};
-            bool m_showDemo{false};
-            bool m_showStats{false};
-            bool m_showHierarchy{false};
-            bool m_showCurrent{false};
-            void doDemo();
-            void doStats();
-            void doHierarchy();
-            void doCurrentObjectInfo();
-            void doAll();
+            void insert(MOSP::Gui::StateWidget *w) { m_widgetList.insert(w); }
+            void remove(MOSP::Gui::StateWidget *w) { m_widgetList.erase(w); }
+            static Object3D *m_currentObj;
+            static Object3D *m_hierarchyObj;
+            static bool m_showGui;
+            static bool m_showDemo;
+            static bool m_showStats;
+            static bool m_showHierarchy;
+            static bool m_showCurrent;
+            static void doStateWidgets();
+            static void doDemo();
+            static void doStats();
+            static void doHierarchy();
+            static void doCurrentObjectInfo();
+            static void doAll();
         };
     }
 }
