@@ -95,7 +95,7 @@ void MospApplication::keyPressEvent(KeyEvent& event) {
 //     Corrade::Utility::Debug{} << "Unused keyPressEvent:" << event.keyName();
     if (event.isRepeated()) return;
     if (event.key() == KeyEvent::Key::I)
-        Gui::Gui::m_showGui = !Gui::Gui::m_showGui;
+        Gui::getDefault().m_showGui = !Gui::getDefault().m_showGui;
 }
 
 void MospApplication::keyReleaseEvent(KeyEvent& event) {
@@ -162,7 +162,7 @@ void MospApplication::drawGUI()
     else if(!ImGui::GetIO().WantTextInput && isTextInputActive())
         stopTextInput();
 
-    Gui::Gui::doAll();
+    Gui::getDefault().doAll();
     /* Update application cursor */
     m_imgui.updateApplicationCursor(*this);
 
@@ -191,7 +191,7 @@ void MospApplication::setupSimulation() {
     auto *cubeMesh = new GL::Mesh(MeshTools::compile(Primitives::cubeSolid()));
     _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::Matrix4::translation({0, 0, 0}));
     _sim.cameraManipulator().rootObject();
-    Gui::Gui::m_hierarchyObj = &_sim.rootObject();
+    Gui::getDefault().m_hierarchyObj = &_sim.rootObject();
 }
 
 MAGNUM_APPLICATION_MAIN(MospApplication)
