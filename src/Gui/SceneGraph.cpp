@@ -13,7 +13,7 @@ MOSP::Object3D *ns::HierarchyWidget(MOSP::Object3D *obj)
     MOSP::Object3D *clicked = nullptr;
     MOSP::Object *mobj = dynamic_cast<MOSP::Object*>(obj);
     if (mobj)
-        opened = ImGui::TreeNode(obj, "%i", mobj->classAutoIndexValue());
+        opened = ImGui::TreeNode(obj, "(%i) \"%s\"", mobj->classAutoIndexValue(), mobj->classInstanceName().data());
     else
         opened = ImGui::TreeNode(obj, "(Basic)");
     if (ImGui::IsItemClicked())

@@ -4,12 +4,16 @@
 #include <Corrade/Containers/Pointer.h>
 #include <RigidBody.h>
 #include <Utils/AutoIndexedClass.h>
+#include <Utils/NamedClassInstance.h>
 #include "SceneGraph.h"
 
 namespace MOSP
 {
 
-    class Object : public Object3D, public MOSP::Utils::AutoIndexedClass<Object>
+    class Object : 
+        public Object3D,
+        public MOSP::Utils::AutoIndexedClass<Object>,
+        public MOSP::Utils::NamedClassInstance<Object>
     {
         Corrade::Containers::Pointer<MOSP::RigidBody> m_rigidBody{nullptr};
     public:

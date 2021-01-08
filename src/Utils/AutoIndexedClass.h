@@ -18,7 +18,7 @@ namespace MOSP
         public:
             std::size_t classAutoIndexValue() const { return m_autoIndexValue; }
         };
-        
+
         template<class T> AutoIndexer<T*> AutoIndexedClass<T>::m_autoIndex;
     }
 }

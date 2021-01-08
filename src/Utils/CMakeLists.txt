@@ -4,6 +4,7 @@ set(SOURCES
     Accumulator.cpp
     AutoIndexer.h
     IndexEntry.h
+    NamedClassInstance.h
     NonOwningLinkedList.h)
 
 add_library(MospUtils STATIC ${SOURCES})

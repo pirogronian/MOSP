@@ -189,7 +189,8 @@ void MospApplication::setupSimulation() {
         .setViewport(GL::defaultFramebuffer.viewport().size());
     auto *coneMesh = new GL::Mesh(MeshTools::compile(Primitives::coneSolid(2, 16, 1)));
     auto *cubeMesh = new GL::Mesh(MeshTools::compile(Primitives::cubeSolid()));
-    _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::Matrix4::translation({0, 0, 0}));
+    auto cone = _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::Matrix4::translation({0, 0, 0}));
+    cone->setClassInstanceName("Cone");
     _sim.cameraManipulator().rootObject();
     Gui::getDefault().m_hierarchyObj = &_sim.rootObject();
 }
