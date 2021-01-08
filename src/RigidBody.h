@@ -1,34 +1,27 @@
 
-#include "Bullet.h"
+#pragma once
 
 #include <Corrade/Containers/Pointer.h>
-#include <Magnum/Math/Constants.h>
+
+#include <btBulletDynamicsCommon.h>
 #include <Magnum/BulletIntegration/Integration.h>
 #include <Magnum/BulletIntegration/MotionState.h>
-#include <Magnum/BulletIntegration/DebugDraw.h>
-
-#include <Object.h>
 
 namespace MOSP
 {
+    class Object;
 
-class RigidBody: public Object {
+    class RigidBody
+    {
+        Object& m_object;
+        Magnum::BulletIntegration::MotionState *m_mState;
+        btDynamicsWorld *m_bWorld{nullptr};
+        btRigidBody *m_bRigidBody{nullptr};
     public:
-        RigidBody(Object*, Magnum::Float, btCollisionShape*, btDynamicsWorld& );
-
-        ~RigidBody() {
-            m_bWorld.removeRigidBody(m_bRigidBody.get());
-        }
-
-        btRigidBody& bulletRigidBody() { return *m_bRigidBody; }
-
-        /* needed after changing the pose from Magnum side */
-        void syncPose() {
-            m_bRigidBody->setWorldTransform(btTransform(transformationMatrix()));
-        }
-
-    private:
-        btDynamicsWorld& m_bWorld;
-        Corrade::Containers::Pointer<btRigidBody> m_rigidBody;
-};
+        RigidBody(MOSP::Object&);
+        btRigidBody *bulletRigidBody() { return m_bRigidBody; }
+        const btRigidBody *bulletRigidBody() const { return m_bRigidBody; }
+        void set(btRigidBody*);
+        void syncTransform();
+    };
 }

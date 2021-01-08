@@ -1,20 +1,17 @@
 
+#include <Object.h>
 #include "RigidBody.h"
 
-using namespace Corrade;
 using namespace MOSP;
+using namespace Magnum;
 
-RigidBody::RigidBody(Object* parent, Magnum::Float mass, btCollisionShape* bShape, btDynamicsWorld& bWorld): Object{parent}, m_bWorld(bWorld) {
-    /* Calculate inertia so the object reacts as it should with
-        rotation and everything */
-    btVector3 bInertia(0.0f, 0.0f, 0.0f);
-    if(!Magnum::Math::TypeTraits<Magnum::Float>::equals(mass, 0.0f))
-        bShape->calculateLocalInertia(mass, bInertia);
+RigidBody::RigidBody(Object& obj) : m_object(obj)
+{
+    m_mState = new BulletIntegration::MotionState(obj);
+}
 
-    /* Bullet rigid body setup */
-    auto* motionState = new Magnum::BulletIntegration::MotionState{*this};
-    m_bRigidBody.emplace(btRigidBody::btRigidBodyConstructionInfo{
-        mass, &motionState->btMotionState(), bShape, bInertia});
-    m_bRigidBody->forceActivationState(DISABLE_DEACTIVATION);
-    bWorld.addRigidBody(m_bRigidBody.get());
+void RigidBody::syncTransform()
+{
+    if (m_bRigidBody != nullptr)
+        m_bRigidBody->setWorldTransform(btTransform(m_object.transformationMatrix()));
 }

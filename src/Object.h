@@ -2,8 +2,7 @@
 #pragma once
 
 #include <Corrade/Containers/Pointer.h>
-#include <BulletDynamics/Dynamics/btRigidBody.h>
-#include <Magnum/BulletIntegration/MotionState.h>
+#include <RigidBody.h>
 #include <Utils/AutoIndexer.h>
 #include "SceneGraph.h"
 
@@ -15,8 +14,7 @@ namespace MOSP
         static MOSP::Utils::AutoIndexer<Object> m_indexer;
         std::size_t m_id;
 
-        Corrade::Containers::Pointer<btRigidBody> m_rigidBody{nullptr};
-        Corrade::Containers::Pointer<Magnum::BulletIntegration::MotionState> m_motionState{nullptr};
+        Corrade::Containers::Pointer<MOSP::RigidBody> m_rigidBody{nullptr};
     public:
         Object(Object *parent = nullptr) : Object3D(parent)
         {
@@ -30,7 +28,8 @@ namespace MOSP
 
         std::size_t id() const { return m_id; }
 
-        bool hasRigidBody() const { return m_rigidBody != nullptr; }
-        void syncRigidBodyTransform();
+        bool hasRigidBody() const { return (bool)m_rigidBody; }
+        RigidBody *rigidBody() { return m_rigidBody.get(); }
+        const RigidBody *rigidBody() const { return m_rigidBody.get(); }
     };
 }

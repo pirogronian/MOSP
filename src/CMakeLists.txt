@@ -20,8 +20,8 @@ target_sources(MOSP PRIVATE
     MospApplication.cpp
     Object.cpp
     Object.h
-    #RigidBody.h
-    #RigidBody.cpp
+    RigidBody.h
+    RigidBody.cpp
     SceneGraph.h
     SceneGraph.cpp
     Simulation.h
@@ -31,7 +31,7 @@ target_sources(MOSP PRIVATE
 )
 
 target_link_libraries(MOSP PRIVATE
-    Utils
+    MospUtils
     Magnum::Application
     Magnum::GL
     Magnum::Magnum

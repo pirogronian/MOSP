@@ -17,4 +17,7 @@ target_link_libraries(AccumulatorTest
     Corrade::Utility
     Corrade::Interconnect
     Magnum::Magnum
-    Utils)
+    MospUtils)
+
+add_executable(PointerTest PointerTest.cpp)
+target_link_libraries(PointerTest Corrade::Containers Corrade::Utility)
