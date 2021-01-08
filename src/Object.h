@@ -11,7 +11,7 @@ namespace MOSP
 
     class Object : public Object3D
     {
-        static MOSP::Utils::AutoIndexer<Object> m_indexer;
+        static MOSP::Utils::AutoIndexer<Object*> m_indexer;
         std::size_t m_id;
 
         Corrade::Containers::Pointer<MOSP::RigidBody> m_rigidBody{nullptr};

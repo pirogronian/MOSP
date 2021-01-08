@@ -15,5 +15,7 @@ else()
     add_compile_options(-w)
 endif()
 
+set(CMAKE_CXX_STANDARD 17)
+
 add_subdirectory(src)
 

@@ -11,12 +11,12 @@ struct TestClass
 using namespace Corrade::Utility;
 using namespace MOSP::Utils;
 
-template class AutoIndexer<TestClass>;
+template class AutoIndexer<TestClass*>;
 
 int main()
 {
     std::array<TestClass, 15> ta;
-    AutoIndexer<TestClass> ai;
+    AutoIndexer<TestClass*> ai;
     for(int i = 0; i < ta.size(); i++)
     {
         ta[i].member = ta.size() - i;

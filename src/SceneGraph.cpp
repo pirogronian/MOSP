@@ -26,4 +26,4 @@ template class Magnum::SceneGraph::AbstractFeatureGroup<3, Magnum::Double>;
 
 template class Magnum::SceneGraph::FeatureGroup<3, Magnum::SceneGraph::Drawable<3, Magnum::Double>, Magnum::Double>;
 
-template class MOSP::Utils::AutoIndexer<Magnum::SceneGraph::Object<Magnum::SceneGraph::BasicMatrixTransformation3D<Magnum::Double>>>;
+template class MOSP::Utils::AutoIndexer<Magnum::SceneGraph::Object<Magnum::SceneGraph::BasicMatrixTransformation3D<Magnum::Double>>*>;

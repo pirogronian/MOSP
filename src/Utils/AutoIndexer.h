@@ -4,6 +4,7 @@
 #include <cassert>
 #include <limits>
 #include <vector>
+#include <optional>
 #include <Corrade/Utility/Debug.h>
 
 namespace MOSP
@@ -16,7 +17,7 @@ namespace MOSP
         public:
             static constexpr std::size_t InvalidIndex = std::numeric_limits<std::size_t>::max();
         protected:
-            std::vector<VType*> m_vector;
+            std::vector<std::optional<VType>> m_vector;
             std::size_t m_firstFreeSlot{InvalidIndex};
             std::size_t m_freeSlots{0};
 
@@ -32,7 +33,7 @@ namespace MOSP
                     return;
                 }
                 for(std::size_t i = m_firstFreeSlot + 1; i < m_vector.size(); i++)
-                    if (m_vector[i] == nullptr)
+                    if (!m_vector[i].has_value())
                     {
                         m_firstFreeSlot = i;
                         return;
@@ -47,15 +48,15 @@ namespace MOSP
             void setUnique(bool u) { m_unique = u; }
             bool contains(std::size_t i) const
             {
-                return i < m_vector.size() && m_vector[i] != nullptr;
+                return i < m_vector.size() && m_vector[i].has_value();
             }
-            std::size_t indexOf(const VType *v) const
+            std::size_t indexOf(const VType v) const
             {
                 for(int i = 0; i < m_vector.size(); i++)
-                    if (m_vector[i] == v)  return i;
+                    if (m_vector[i].has_value() && m_vector[i].value() == v)  return i;
                 return InvalidIndex;
             }
-            std::size_t add(VType *v)
+            std::size_t add(VType v)
             {
                 if (m_unique && indexOf(v) != InvalidIndex)  return InvalidIndex;
 
@@ -79,12 +80,12 @@ namespace MOSP
                 {
                     if (i == m_vector.size() - 1)
                     {
-                        m_vector[i] = nullptr;
+                        m_vector[i].reset();
                         m_vector.resize(i);
                     }
                     else
                     {
-                        m_vector[i] = nullptr;
+                        m_vector[i].reset();
                         ++m_freeSlots;
                         if (m_firstFreeSlot == InvalidIndex || m_firstFreeSlot > i)
                             m_firstFreeSlot = i;
@@ -93,9 +94,9 @@ namespace MOSP
                 }
                 return false;
             }
-            VType *get(std::size_t i) const
+            VType get(std::size_t i) const
             {
-                return m_vector[i];
+                return m_vector[i].value();
             }
         };
         template<class VType>
