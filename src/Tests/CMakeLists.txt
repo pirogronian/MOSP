@@ -21,3 +21,6 @@ target_link_libraries(AccumulatorTest
 
 add_executable(PointerTest PointerTest.cpp)
 target_link_libraries(PointerTest Corrade::Containers Corrade::Utility)
+
+add_executable(IndexEntryTest IndexEntryTest.cpp)
+target_include_directories(IndexEntryTest BEFORE PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../")
