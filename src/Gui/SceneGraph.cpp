@@ -12,10 +12,16 @@ MOSP::Object3D *ns::HierarchyWidget(MOSP::Object3D *obj)
     bool opened;
     MOSP::Object3D *clicked = nullptr;
     MOSP::Object *mobj = dynamic_cast<MOSP::Object*>(obj);
+    int flags = ImGuiTreeNodeFlags_OpenOnArrow;
+    if (obj->children().isEmpty()) flags |= ImGuiTreeNodeFlags_Leaf;
     if (mobj)
-        opened = ImGui::TreeNode(obj, "(%i) \"%s\"", mobj->classAutoIndexValue(), mobj->classInstanceName().data());
+        opened = ImGui::TreeNodeEx(obj,
+                                   flags,
+                                   "(%i) \"%s\"",
+                                   mobj->classAutoIndexValue(),
+                                   mobj->classInstanceName().data());
     else
-        opened = ImGui::TreeNode(obj, "(Basic)");
+        opened = ImGui::TreeNodeEx(obj, flags, "(Basic)");
     if (ImGui::IsItemClicked())
         clicked = obj;
     if (opened)
@@ -33,15 +39,26 @@ MOSP::Object3D *ns::HierarchyWidget(MOSP::Object3D *obj)
 
 void ns::ObjectInfoWidget(MOSP::Object3D *obj)
 {
-    auto pos = obj->transformationMatrix().translation();
-    ImGui::BeginGroup();
-    ImGui::Text("Position:");
-    ns::TransformInfoWidget(pos);
-    ImGui::EndGroup();
-    ImGui::SameLine();
-    ImGui::BeginGroup();
-    ImGui::Text("Rotation:");
-    auto rot = MOSP::toEuler(obj->transformationMatrix().rotation());
-    ns::TransformInfoWidget(rot);
-    ImGui::EndGroup();
+    if (ImGui::CollapsingHeader("Transformations"))
+    {
+        auto matrix = obj->transformationMatrix();
+        if (ImGui::CollapsingHeader("Euler"))
+        {
+            auto pos = matrix.translation();
+            ImGui::BeginGroup();
+            ImGui::Text("Position:");
+            ns::TransformInfoWidget(pos);
+            ImGui::EndGroup();
+            ImGui::SameLine();
+            ImGui::BeginGroup();
+            ImGui::Text("Rotation:");
+            auto rot = MOSP::toEuler(matrix.rotation());
+            ns::TransformInfoWidget(rot);
+            ImGui::EndGroup();
+        }
+        if (ImGui::CollapsingHeader("Matrix"))
+        {
+            ns::TransformInfoWidget(matrix);
+        }
+    }
 }

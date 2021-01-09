@@ -2,6 +2,7 @@
 #include <Magnum/Math/Angle.h>
 #include <Magnum/Math/Vector3.h>
 #include <Magnum/Math/Matrix.h>
+#include <Magnum/Math/Matrix4.h>
 
 #include <Magnum/Magnum.h>
 // #include <>
