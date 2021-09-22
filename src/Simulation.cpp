@@ -17,7 +17,8 @@ void ColoredDrawable::draw(const MOSP::Matrix4& transformationMatrix, MOSP::Came
     _shader
         .setDiffuseColor(_color)
         .setLightPositions({
-            {Magnum::MatrixTypeFor<3, Float>(camera.cameraMatrix()).transformPoint({-3.0f, 10.0f, 10.0f}), 0.0f}
+            {Magnum::MatrixTypeFor<3, Float>(camera.cameraMatrix()).transformPoint({3.0f, 10.0f, 10.0f}), 0.0f}
+//             {{3.0f, 10.0f, 10.0f}, 0.0f}
         })
         .setTransformationMatrix(Magnum::Matrix4(transformationMatrix))
         .setNormalMatrix(Magnum::Matrix3(transformationMatrix.normalMatrix()))
@@ -32,6 +33,7 @@ Simulation::Simulation()
     _phongShader.setAmbientColor(0x111111_rgbf)
         .setSpecularColor(0xffffff_rgbf)
         .setShininess(80.0f);
+    _root.setClassInstanceName("Root");
 }
 
 MOSP::Object *Simulation::createColoredObject(Magnum::GL::Mesh& mesh, const Magnum::Color4 color, MOSP::Matrix4 transform, MOSP::Object *parent)

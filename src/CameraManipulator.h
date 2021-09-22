@@ -1,19 +1,22 @@
 
 #include <Magnum/Math/Quaternion.h>
 #include "Math.h"
+#include "Object.h"
 
 #include <SceneGraph.h>
 
 namespace MOSP
 {
     class CameraManipulator {
-        Object3D m_manipulator;
-        Object3D m_camObject;
+        MOSP::Object m_manipulator;
+        MOSP::Object m_camObject;
         Camera3D m_camera;
     public:
-        CameraManipulator(Object3D *parent) :
+        CameraManipulator(Object *parent) :
             m_manipulator{parent}, m_camObject(&m_manipulator), m_camera(m_camObject)
         {
+            m_manipulator.setClassInstanceName("CameraManipulator");
+            m_camObject.setClassInstanceName("CameraObject");
         }
         Camera3D& camera() { return m_camera; }
         const Object3D& rootObject() const { return m_manipulator; }
