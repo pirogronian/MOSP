@@ -1,2 +1,2 @@
 # MOSP
-This project has became abandoned in favour of https://github.com/pirogronian/IOSP, which also has been abandoned due to technical difficulties. :-(
+This project has became abandoned in favour of https://github.com/pirogronian/IOSP, which also has been abandoned due to technical difficulties. :-( However, recently I decided to give it another chance...
