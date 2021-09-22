@@ -182,7 +182,6 @@ void MospApplication::testMouseRotation(const Magnum::Vector2i &v)
 }
 
 void MospApplication::setupSimulation() {
-//     _sim.cameraManipulator().setAbsoluteDistance(5);
     _sim.cameraManipulator().setAbsoluteDistance(5);
     _sim.camera().setAspectRatioPolicy(Magnum::SceneGraph::AspectRatioPolicy::Extend)
         .setProjectionMatrix(MOSP::Matrix4::perspectiveProjection(35.0_deg, 1.0, 0.01, 1000.0))
@@ -191,7 +190,6 @@ void MospApplication::setupSimulation() {
     auto *cubeMesh = new GL::Mesh(MeshTools::compile(Primitives::cubeSolid()));
     auto cone = _sim.createColoredObject(*coneMesh, 0xa5c9ea_rgbf, MOSP::Matrix4::translation({0, 0, 0}));
     cone->setClassInstanceName("Cone");
-    _sim.cameraManipulator().rootObject();
     Gui::getDefault().m_hierarchyObj = &_sim.rootObject();
 }
 
